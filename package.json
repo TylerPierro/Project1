@@ -1,0 +1,24 @@
+{
+  "name": "express-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "start": "nodemon --exec ts-node src/index.ts"
+  },
+  "author": "Tyler Pierro",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.11.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "crypto": "^1.0.1",
+    "crypto-js": "^3.1.9-1",
+    "cryptojs": "^2.5.3",
+    "express": "^4.16.3",
+    "node-cryptojs-aes": "^0.4.0",
+    "npm": "^6.1.0",
+    "password-hash": "^1.2.2"
+  }
+}
