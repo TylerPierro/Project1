@@ -1,9 +1,10 @@
 import express from 'express';
 import {Request, Response, NextFunction} from 'express';
+//import session from 'express-session';
 import { ESPIPE } from 'constants';
-//import { pizzaRouter } from './routers/pizza-router';
 import { userRouter } from './routers/user-router';
 import { reimbursementRouter } from './routers/reimbursement-router';
+//import { sessionRouter } from './routers/session';
 import bodyParser from 'body-parser';
 
 const app = express();
@@ -26,9 +27,10 @@ app.use(bodyParser.json());
 /***************************************************************
  * Register Routers
  **************************************************************/
-//app.use('/pizzas', pizzaRouter);
 app.use('/users', userRouter);
 app.use('/reimbursements', reimbursementRouter);
+//app.use(session({ secret: 'this-is-a-secret-token', cookie: { maxAge : 60000 }}), sessionRouter);
+
 
 app.listen(port, () =>  {
     console.log(`app is running at http://localhost:${app.get('port')}`);

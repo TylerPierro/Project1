@@ -72,7 +72,7 @@ userRouter.post('',(req: Request, resp: Response) =>   {
     else {
         const u = new User(req.body.username, req.body.password, req.body.firstName, req.body.lastName, req.body.email, req.body.role);
         users.push(u); 
-        resp.sendStatus(201);
+        resp.sendStatus(201); 
     }   
 });
 
