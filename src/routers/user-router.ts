@@ -82,27 +82,26 @@ userRouter.post('',(req: Request, resp: Response) =>   {
     }   
 });
 
-/*userRouter.put('',(req: Request, resp: Response) =>   {
-    const myUserRequest = new Request(`get/user/username/${req.body.username}`);
-    let userResult = fetch(myUserRequest).then(function(response) {
-        if (response.status === 400) resp.sendStatus(404);
-    }); //If the user isn't in the database, then the user wasn't found
-    console.log(req.body.username);
-    const userResult : User = findUser(req.body.username);
-    console.log(req.body.username);
-    if (userResult === null) resp.sendStatus(404);
-    if (userResult.getFirstName() !== req.body.firstName) userResult.setFirstName(req.body.firstName);
-    if (userResult.getLastName() !== req.body.lastName) userResult.setLastName(req.body.lastName);
-    if (userResult.getPassword() !== req.body.password) userResult.setPassword(req.body.password);
-    if (userResult.getEmail() !== req.body.email) userResult.setEmail(req.body.email);
-    if (userResult.getRole() !== req.body.role) userResult.setRole(req.body.role);
-    //note you can't change the username
-    for (let i = 0; i < users.length; i++)  {
-        if (users[i] === userResult) users.splice(i,1,userResult);
+userRouter.put('',(req: Request, resp: Response) =>   {
+    if (!req.body.username || !req.body.password || !req.body.firstName || !req.body.lastName || !req.body.email || !req.body.role)   {
+        resp.sendStatus(400);
+    } //If a parameter is missing, bad request
+    const u = new User(req.body.username, req.body.password, req.body.firstName, req.body.lastName, req.body.email, req.body.role);
+    console.log(`updating user: ${JSON.stringify(req.body)}
+        in users`);
+    if (!validUser) { resp.sendStatus(400); }
+    else {
+        userService.updateUser(u)
+            .then(data => {
+                resp.json(data);
+            })
+            .catch(err => {
+                console.log(err);
+                resp.sendStatus(500);
+            })
     }
-    resp.send(users);
 });
-*/
+
 userRouter.delete('/delete/:username', (req: Request, resp: Response) =>    {
     userService.removeuser(req.params.username)
         .then(data => {

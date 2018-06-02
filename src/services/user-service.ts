@@ -15,3 +15,7 @@ export function createUser(newUser: User) {
 export function removeuser(username: string) {
     return userDao.removeUser(username);
 }
+
+export function updateUser(u : User) {
+    return userDao.updateUser(u);
+}

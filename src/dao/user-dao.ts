@@ -34,6 +34,13 @@ export function createUserTable()  {
     });
 }
 
+export function saveUser(user) : Promise<any> {
+    return docClient.put({
+        TableName : 'users',
+        Item : user
+    }).promise();
+}
+
 export function retrieveAllUsers(): Promise<any>   {
     return docClient.scan({
         TableName: 'users',
@@ -60,13 +67,13 @@ export function createUser(newUser : User): Promise<any> {
     }).promise();
 }
 
-/*export function updateUser(updatedUser : User): Promise<any> {
-    return docClient.put({
+export function updateUser(updatedUser : User): Promise<any> {
+    return docClient.update({
         TableName: 'users',
         Key: {
-            username: updatedUser.username
+            username: updatedUser.getUsername()
         },
-        UpdatedExpression: 'set #pass = :p, #em = :e, #ro = :r',
+        UpdateExpression: 'set #pass = :p, #em = :e, #ro = :r',
         ExpressionAttributeNames: {
             '#pass': 'password',
             '#em': 'email',
@@ -79,7 +86,7 @@ export function createUser(newUser : User): Promise<any> {
         },
         ReturnValues: 'UPDATED_NEW'
     }).promise();
-}*/
+}
 
 export function removeUser(username: string): Promise<any> {
     return docClient.delete({
