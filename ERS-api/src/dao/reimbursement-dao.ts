@@ -104,12 +104,12 @@ export function updateReimbursement(updatedReimbursement : Reimbursement): Promi
 
 export function removeReimbursement(username: string, timeSubmitted: number): Promise<any> {
     let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
-    let ts = new Date(timeSubmitted).toLocaleDateString("en-US", options);
+    let ts = new Date(timeSubmitted);//.toLocaleDateString("en-US", options);
     return docClient.delete({
         TableName: 'reimbursements',
         Key: {
             username: username,
-            timeSubmitted: ts
+            timeSubmitted: ts.getDate()
         }
     }).promise();
 }

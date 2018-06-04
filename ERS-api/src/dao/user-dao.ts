@@ -47,8 +47,8 @@ export function retrieveAllUsers(): Promise<any>   {
     }).promise();
 }
 
-export function findUserByUsername(username: string): Promise<any>  {
-    return docClient.query({
+export async function findUserByUsername(username: string): Promise<any>  {
+    /*return docClient.query({
         TableName: 'users',
         KeyConditionExpression: '#usr = :uuuu',
         ExpressionAttributeNames: {
@@ -57,6 +57,12 @@ export function findUserByUsername(username: string): Promise<any>  {
         ExpressionAttributeValues: {
             ':uuuu': username
         },
+    }).promise();*/
+    return docClient.get({
+        TableName: 'users',
+        Key: {
+            'username': username
+        }
     }).promise();
 }
 

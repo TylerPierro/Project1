@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express';
 import * as reimbursementService from '../services/reimbursement-service';
 import { Reimbursement, ReimbursementItem } from '../beans/Reimbursement';
 import { User } from '../beans/User';
-import fetch from 'fetch';
 
 export const reimbursementRouter = express.Router();
 
