@@ -35,7 +35,7 @@ userRouter.get('/username/:username', (req, resp) =>    {
 
 function validUser(questionable : User) : boolean {
     let existing : string = 'failure';
-    let blob = userService.findUserByUsername(questionable.getUsername())
+    userService.findUserByUsername(questionable.getUsername())
         .then(data => {
             console.log('Username unavailable');
             //console.log(data.Item);
