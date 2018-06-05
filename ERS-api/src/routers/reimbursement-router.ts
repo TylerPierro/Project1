@@ -10,8 +10,9 @@ export const reimbursementRouter = express.Router();
     resp.json(reimbursements);
 });
 */
-reimbursementRouter.get('/username/:username', (req: Request, resp: Response) =>    {
-    const username = req.params.username;
+reimbursementRouter.get('/username', (req: Request, resp: Response) =>    {
+    const username = req.session.username;
+    //const username = 'TyPiRo';
     console.log(`retrieving remimbursements for user: ${username}`);
     reimbursementService.findReimbursementsByUsername(username)
         .then(data => {
@@ -23,8 +24,8 @@ reimbursementRouter.get('/username/:username', (req: Request, resp: Response) =>
         });
 });
 
-reimbursementRouter.get('/status/:status', (req: Request, resp: Response) =>    {
-    const status = req.params.status;
+reimbursementRouter.get('/status', (req: Request, resp: Response) =>    {
+    const status = req.session.status;
     console.log(`retrieving remimbursements with status: ${status}`);
     reimbursementService.findReimbursementsByStatus(status)
         .then(data => {
@@ -76,37 +77,10 @@ reimbursementRouter.post('',(req: Request, resp: Response) =>   {
     }
 
     let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
-    let now = new Date(Date.now()).toLocaleDateString("en-US", options);
+    //let now = new Date(Date.now()).toLocaleDateString("en-US", options);
     const r = new Reimbursement(req.body.username, req.body.timeSubmitted, req.body.items, req.body.approver, req.body.status, req.body.receipts);
     console.log(`adding reimbursement: ${JSON.stringify(req.body)}
-        to reimbursements`);
-    /*const fetchUrl = require("fetch").fetchURL;
-    fetchUrl('http://localhost:3000/users/')
-        .then(resp => resp.json())
-        .then((reimbursements) => {
-            // clear table
-            //   const body = document.getElementById('movie-table-body');
-            //   body.innerHTML = '';
-
-            // populate the table for each movie
-            reimbursements.forEach(ri => {
-                if(ri.getUsername() === req.body.username) { userRequest = true; }
-                if(ri.getUsername() === req.body.approver) { adminRequest = true; }
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-        else if (!(req.body.status === 'approved' || req.body.status === 'denied' || req.body.status === 'pending')) {
-            resp.sendStatus(428);
-        } //If the status isn't approved or denied, bad request
-        else if (userRequest === false || adminRequest === false) {
-            resp.sendStatus(404);
-        } //If either the user or the admin isn't a real user
-        else if (req.body.timeSubmitted > Date.now())  {
-            resp.sendStatus(400);
-        } //That date hasn't happened yet*/
-    
+        to reimbursements`);    
     if (!validReimbursement) { resp.sendStatus(400); }
     else {
         reimbursementService.createReimbursement(r)
