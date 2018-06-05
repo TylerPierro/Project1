@@ -10,7 +10,7 @@ function login() {
         'content-type': 'application/json'
       },
       //Credentials needs to be set back to include instead of same-origin
-      credentials: 'same-origin',
+      credentials: 'include',
       method: 'POST',
       mode: 'cors'
     })

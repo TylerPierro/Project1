@@ -24,7 +24,7 @@ app.use(session(sess));
 
 // allow static content to be served, navigating to url with nothing after / will serve index.html from public
 app.use(
-    express.static(path.join(__dirname, 'static'))
+    express.static(path.join(__dirname, '../../browser'))
 );
 
 // Log all requests url and method to the console

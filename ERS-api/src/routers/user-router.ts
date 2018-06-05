@@ -89,12 +89,14 @@ userRouter.post('/login', (req, resp, next) => {
     // should probably send a call to the db to get the actual user object to determine role
     if (req.body.username === 'admin' && req.body.password === 'admin') {
       req.session.role = 'admin'; 
+      req.session.username = 'admin';
       resp.json({
         username: 'admin',
         role: 'admin'
       });
     } else if (req.body.username === 'blake' && req.body.password === 'pass') {
       req.session.role = 'employee';
+      req.session.username = 'blake';
       resp.json({
         username: 'blake',
         role: 'employee'
@@ -105,6 +107,8 @@ userRouter.post('/login', (req, resp, next) => {
             .then(data => {
                 console.log(data.Item);
                 if(req.body.username === data.Item.username && passwordHash.verify(req.body.password, data.Item.password))    {
+                    req.session.role = data.Item.role;
+                    req.session.username = data.Item.username;
                     resp.json({
                         username: req.body.username,
                         role: req.body.role
