@@ -78,7 +78,7 @@ reimbursementRouter.post('',(req: Request, resp: Response) =>   {
 
     let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
     //let now = new Date(Date.now()).toLocaleDateString("en-US", options);
-    const r = new Reimbursement(req.body.username, req.body.timeSubmitted, req.body.items, req.body.approver, req.body.status, req.body.receipts);
+    const r = new Reimbursement(req.session.username, req.body.timeSubmitted, req.body.items, req.body.approver, req.body.status, req.body.receipts);
     console.log(`adding reimbursement: ${JSON.stringify(req.body)}
         to reimbursements`);    
     if (!validReimbursement) { resp.sendStatus(400); }
