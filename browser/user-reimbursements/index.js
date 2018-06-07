@@ -80,16 +80,14 @@ function NextItem() {
     "description": "${description}",
     "timeOfExpense": "${timeOfExpense}"
   }`
-  /*for (let i=0; i<localStorage.getItem("riarr").length; i++)  {
-    if (items[i].title === document.getElementById('inputTitle4')) 
-    {
-      document.getElementById('inputTitle4').setAttribute('placeholder','Title must be unique to this list');
-      return;
-    }
-  }*/
+
+  // if (localStorage.getItem("riarr").contains(title)) {
+  //   document.getElementById('inputTitle4').setAttribute('placeholder','Title must be unique to this list');
+  //   return;
+  // }
+
   if (localStorage.getItem("riarr") === '[') { items = newItem; }
   else { items = localStorage.getItem("riarr") + ', ' + newItem; }
-  console.log(items);
   localStorage.setItem("riarr", items); // riarr = reimbursement item array
 }
 
@@ -100,18 +98,17 @@ function CreateReimbursement() {
   let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
   let reimburse = {
     username: 'currentUser',
-    timeSubmitted: new Date(Date.now()).toLocaleDate('en-US', options),
+    timeSubmitted: new Date(Date.now()).toLocaleString('en-US', options),
     items: JSON.parse(localStorage.getItem("riarr")),
     approver: 'pending',
     status: 'pending',
     receipts: []
   }
-  console.log(items.toString);
   fetch('http://localhost:3000/reimbursements/', {
     body: JSON.stringify(reimburse),
-    /*headers: {
+    headers: {
       'content-type': 'application/json'
-    },*/
+    },
     credentials: 'include',
     method: 'POST',
     mode: 'cors'
