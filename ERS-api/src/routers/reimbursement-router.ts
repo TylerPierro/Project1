@@ -39,23 +39,6 @@ reimbursementRouter.get('/status', (req: Request, resp: Response) =>    {
 
 function validReimbursement(r : Reimbursement) : boolean {
     let isValid = true;
-    /*const fetchUrl = require("fetch").fetchURL;
-    fetchUrl('http://localhost:3000/users/')
-        .then(resp => resp.json())
-        .then((reimbursements) => {
-            // clear table
-            //   const body = document.getElementById('movie-table-body');
-            //   body.innerHTML = '';
-
-            // populate the table for each movie
-            reimbursements.forEach(ri => {
-                if(ri.getUsername() === req.body.username) { userRequest = true; }
-                if(ri.getUsername() === req.body.approver) { adminRequest = true; }
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        });*/
     if (!(r.getStatus() === 'approved' || r.getStatus() === 'denied' || r.getStatus() === 'pending')) {
         return false;
     } //If the status isn't approved or denied, bad request

@@ -66,36 +66,42 @@ function addReimbursement(reimbursements) {
   $('#myInput').trigger('focus')
 })*/
 
-let items = [];
 function NextItem() {
-  let newItem = {
-    title : '',
-    amount : 0,
-    description : 'lorem ipsum',
-    timeOfExpense : new Date()
-  }
-  for (let i=0; i<items.length; i++)  {
+  let title = document.getElementById('inputTitle4').value;
+  let amount = document.getElementById('inputAmount4').value;
+  let description = document.getElementById('inputDescription4').value;
+  const options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
+  let timeOfExpense = new Date(document.getElementById('inputTime4').value).toLocaleDateString('en-US', options);
+
+  newItem = 
+  `{
+    "title": "${title}",
+    "amount": "${amount}",
+    "description": "${description}",
+    "timeOfExpense": "${timeOfExpense}"
+  }`
+  /*for (let i=0; i<localStorage.getItem("riarr").length; i++)  {
     if (items[i].title === document.getElementById('inputTitle4')) 
     {
-      documeent.getElementById('inputTitle4').setAttribute('placeholder','Title must be unique to this list');
+      document.getElementById('inputTitle4').setAttribute('placeholder','Title must be unique to this list');
       return;
     }
-  }
-  newItem.title = document.getElementById('inputTitle4');
-  newItem.amount = document.getElementById('inputAmount4');
-  newItem.description = document.getElementById('inputDescription4');
-  let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
-  newItem.timeOfExpense = new Date(document.getElementById('inputTime4')).toLocaleDateString('en-US', options);
-  items.push(newItem);
+  }*/
+  if (localStorage.getItem("riarr") === '[') { items = newItem; }
+  else { items = localStorage.getItem("riarr") + ', ' + newItem; }
+  console.log(items);
+  localStorage.setItem("riarr", items); // riarr = reimbursement item array
 }
 
-function createReimbursement() {
+function CreateReimbursement() {
   NextItem();
+  console.log('['+localStorage.getItem("riarr")+']');
+  const itemlist = JSON.parse('['+localStorage.getItem("riarr")+']');
   let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
   let reimburse = {
     username: 'currentUser',
     timeSubmitted: new Date(Date.now()).toLocaleDate('en-US', options),
-    items: items,
+    items: JSON.parse(localStorage.getItem("riarr")),
     approver: 'pending',
     status: 'pending',
     receipts: []
@@ -106,7 +112,6 @@ function createReimbursement() {
     /*headers: {
       'content-type': 'application/json'
     },*/
-    //Credentials needs to be set back to include instead of same-origin
     credentials: 'include',
     method: 'POST',
     mode: 'cors'

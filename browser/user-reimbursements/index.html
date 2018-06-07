@@ -17,6 +17,7 @@
   <script text='text/javascript'>
     let preload = retreiveUserReims()
     preload
+    localStorage.setItem("riarr",'[')
   </script>
   
   <!-- Custom styles for this template -->
@@ -61,9 +62,9 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="reset" class="btn btn-primary" onclick="NextItem()">Add Another Item</button>
+              <button type="button" class="btn btn-primary" onclick="NextItem()">Add Another Item</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" form="form" class="btn btn-primary" onclick="CreateReimbursement()">Submit</button>
+              <button type="button" form="form" class="btn btn-primary" onclick="CreateReimbursement()">Submit</button>
             </div>
           </form>
         </div>
