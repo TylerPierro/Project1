@@ -24,8 +24,8 @@ reimbursementRouter.get('/username', (req: Request, resp: Response) =>    {
         });
 });
 
-reimbursementRouter.get('/status', (req: Request, resp: Response) =>    {
-    const status = req.session.status;
+reimbursementRouter.get('/status/:status', (req: Request, resp: Response) =>    {
+    const status = req.params.status;
     console.log(`retrieving remimbursements with status: ${status}`);
     reimbursementService.findReimbursementsByStatus(status)
         .then(data => {
@@ -102,8 +102,8 @@ reimbursementRouter.put('/username/:username', (req: Request, resp: Response) =>
  
 reimbursementRouter.delete('/delete/username/:username/timestamp/:timestamp', (req: Request, resp: Response) =>    {
     const username = req.params.username;
-    const timeSubmitted = req.params.timeSubmitted;
-    console.log(`deleting remimbursements for user: ${username}`);
+    const timeSubmitted = Number(req.params.timestamp);
+    console.log(`deleting remimbursements for user: ${username} at time ${timeSubmitted}`);
     reimbursementService.removeReimbursement(username,timeSubmitted)
         .then(data => {
             resp.sendStatus(200);

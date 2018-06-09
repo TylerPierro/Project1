@@ -4,20 +4,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Gather all the reimbursements for a given individual">
+  <meta name="description" content="Create a new user">
   <meta name="author" content="Tyler Pierro">
   <link rel="icon" href="../../../../favicon.ico">
 
-  <title>ERS User Home</title>
+  <title>Registration</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
     crossorigin="anonymous">
 
   <script src="index.js"></script>
-  <script text='text/javascript'>
-    let preload = retreiveUserReims()
-    preload
-  </script>
   
   <!-- Custom styles for this template -->
   <link href="../navbar.css" rel="stylesheet">
@@ -59,37 +55,66 @@
     </div>
   </nav>
 
-  <form>
+  <!--Carousel-->
+  <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src=".../800x400?auto=yes&bg=777&fg=555&text=First slide" alt="First slide">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src=".../800x400?auto=yes&bg=666&fg=444&text=Second slide" alt="Second slide">
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src=".../800x400?auto=yes&bg=555&fg=333&text=Third slide" alt="Third slide">
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+  <!--Reigstration form-->
+  <form onsubmit="event.preventDefault(); CreateUser()">
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputFirst">First Name</label>
-        <input type="text" class="form-control" id="inputFirst4" placeholder="John">
+        <input type="text" class="form-control" id="inputFirst4" placeholder="John" required>
       </div>
       <div class="form-group col-md-6">
         <label for="inputLast">Last Name</label>
-        <input type="text" class="form-control" id="inputLast4" placeholder="Smith">
+        <input type="text" class="form-control" id="inputLast4" placeholder="Smith" required>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputUsername">Username</label>
-        <input type="text" class="form-control" id="inputUsername4" placeholder="JSmith">
+        <input type="text" class="form-control" id="inputUsername4" placeholder="JSmith" required>
       </div>
       <div class="form-group col-md-6">
         <label for="inputPassword4">Password</label>
-        <input type="password" class="form-control" id="inputPassword4">
+        <input type="password" class="form-control" id="inputPassword4" required>
       </div>
     </div>
     <div class="form-group">
       <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="jsmith@gmail.com">
+      <input type="email" class="form-control" id="inputEmail4" placeholder="jsmith@gmail.com" required>
     </div>
     <fieldset class="form-group">
       <div class="row">
         <legend class="col-form-label col-sm-4 pt-0">Priveledges</legend>
         <div class="col-sm-4">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+            <input class="form-check-input" type="radio" name="roleRadios" id="gridRadios1" value="employee" checked>
             <label class="form-check-label" for="gridRadios1">
               Employee
             </label>
@@ -97,7 +122,7 @@
         </div>
         <div class="col-sm-4">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+            <input class="form-check-input" type="radio" name="roleRadios" id="gridRadios2" value="admin">
             <label class="form-check-label" for="gridRadios2">
               Admin
             </label>

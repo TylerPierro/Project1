@@ -1,11 +1,15 @@
-function retreiveUserReims() {
-  const status = document.getElementById('staus-input').value;
-  fetch('http://localhost:3000/reimbursements/status/', {credentials: 'include'})
+function retreiveUserReims(status='pending') {
+  fetch('http://localhost:3000/reimbursements/status/'+status, {
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'GET'
+  })
     .then(resp => resp.json())
     .then((reimbursements) => {
 
       // clear table
-      const body = document.getElementById('user-table-body');
+      const body = document.getElementById('status-table-body');
       body.innerHTML = '';
 
       // populate the table for each movie
@@ -17,23 +21,15 @@ function retreiveUserReims() {
 }
 
 function addReimbursement(reimbursements) {
-  const body = document.getElementById('user-table-body');
+  const body = document.getElementById('status-table-body');
 
+  // Row buttons
   const headerRow = document.createElement('tr'); //create new header
-  headerRow.setAttribute("class","header");
+  headerRow.setAttribute('onclick','focusIn()');
+
   let data = document.createElement('td'); // create <td>
   data.innerText = 'Entry:'; // assign value to the td
   
-  //Delete button
-  let deleteButton = document.createElement("button");
-  deleteButton.setAttribute("onclick", "deleteReim()");
-  deleteButton.setAttribute("class", "btn btn-danger");
-  deleteButton.setAttribute("type", "button");
-  deleteButton.innerText = 'X';
-  data.appendChild(document.createElement("br"));
-  data.appendChild(deleteButton);
-  //-------------
-
   headerRow.appendChild(data); // append the td to the row
   data = document.createElement('td'); 
   data.innerText = reimbursements.username;
@@ -55,26 +51,6 @@ function addReimbursement(reimbursements) {
   data.innerText = reimbursements.approver;
   headerRow.appendChild(data);
   body.appendChild(headerRow);
-  //Add the items
-  for (let i=0; i<reimbursements.items.length; i++) {
-    let row = document.createElement('tr');
-    data = document.createElement('td');
-    data.innerText = `${i+1}:`;
-    row.appendChild(data);
-    data = document.createElement('td');
-    data.innerText = reimbursements.items[i].title;
-    row.appendChild(data);
-    data = document.createElement('td');
-    data.innerText = reimbursements.items[i].amount;
-    row.appendChild(data);
-    data = document.createElement('td');
-    data.innerText = new Date(reimbursements.items[i].timeOfExpense).toLocaleDateString('en-US', options);
-    row.appendChild(data);
-    data = document.createElement('td');
-    data.innerText = reimbursements.items[i].description;
-    row.appendChild(data);
-    body.appendChild(row); // append the row to the body
-  }
 }
 
 function NextItem() {
