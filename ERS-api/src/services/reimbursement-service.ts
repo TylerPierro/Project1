@@ -9,6 +9,10 @@ export function findReimbursementsByUsername(username: string) {
     return reimbursementDao.findReimbursementsByUsername(username);
 }
 
+export function findIndividualReimbursements(username: string, timeSubmitted: number) {
+    return reimbursementDao.findIndividualReimbursement(username, timeSubmitted);
+}
+
 export function createReimbursement(ri: Reimbursement) {
     return reimbursementDao.createReimbursement(ri);
 }

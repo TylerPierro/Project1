@@ -71,6 +71,16 @@ export function findReimbursementsByUsername(username: string): Promise<any>  {
     }).promise();
 }
 
+export function findIndividualReimbursement(username: string, timeSubmitted: number) {
+    return docClient.get({
+        TableName: 'reimbursements',
+        Key: {
+            'username': username,
+            'timeSubmitted': timeSubmitted
+        }
+    }).promise();
+}
+
 export function createReimbursement(newReimbursement : Reimbursement): Promise<any> {
     return docClient.put({
         TableName: 'reimbursements',

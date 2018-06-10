@@ -21,10 +21,12 @@ function login() {
     }
     if (resp.status === 200) {
       return resp.json();
-    }
+    } 
     throw 'Unable to login at this time, please try again later';
   })
   .then(data => {
+    sessionStorage.setItem('username', data.username);
+    sessionStorage.setItem('role', data.role)
     window.location = '../user-reimbursements/index.html';
   })
   .catch(err => {

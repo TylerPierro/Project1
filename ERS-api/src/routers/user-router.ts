@@ -107,12 +107,9 @@ userRouter.post('/login', (req, resp, next) => {
             .then(data => {
                 console.log(data.Item);
                 if(req.body.username === data.Item.username && passwordHash.verify(req.body.password, data.Item.password))    {
-                    req.session.role = data.Item.role;
-                    req.session.username = data.Item.username;
-                    resp.json({
-                        username: req.body.username,
-                        role: req.body.role
-                    });
+                    // req.session.role = data.Item.role;
+                    // req.session.username = data.Item.username;
+                    resp.json(data.Item);
                     resp.sendStatus(200);
                 } else { resp.sendStatus(401); }
             })

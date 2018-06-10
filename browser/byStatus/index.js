@@ -1,3 +1,18 @@
+function adminsOnly() {
+  const status = sessionStorage.getItem('role');
+  const navBody = document.getElementById('leftNav');
+  if (status === 'admin') {
+    let adminNav = document.createElement('li');
+    adminNav.innerHTML = 
+    `<li class="nav-item active">
+      <a class="nav-link" href="../byStatus/index.html">Admins Page
+        <span class="sr-only">(current)</span>
+      </a>
+    </li>`;
+    navBody.appendChild(adminNav);
+  }
+}
+
 function retreiveUserReims(status='pending') {
   fetch('http://localhost:3000/reimbursements/status/'+status, {
     headers: {
@@ -25,11 +40,96 @@ function addReimbursement(reimbursements) {
 
   // Row buttons
   const headerRow = document.createElement('tr'); //create new header
-  headerRow.setAttribute('onclick','focusIn()');
+  headerRow.setAttribute('onclick',`focusIn("${reimbursements.username}", "${reimbursements.timeSubmitted}")`);
+  let data = document.createElement('td'); // create <td>
+  
+  headerRow.appendChild(data); // append the td to the row
+  data = document.createElement('td'); 
+  data.innerText = reimbursements.username;
+  data.setAttribute("id","username");
+  headerRow.appendChild(data); 
+  data = document.createElement('td');
+  data.innerText = reimbursements.status; 
+  headerRow.appendChild(data);
 
+  //  Time submitted
+  data = document.createElement('td');
+  let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
+  data.innerText = new Date(reimbursements.timeSubmitted).toLocaleDateString('en-US', options);
+  data.setAttribute("id","timeSubmitted");
+  headerRow.appendChild(data);
+  //  ---------------
+
+  data = document.createElement('td');
+  data.innerText = reimbursements.approver;
+
+  headerRow.appendChild(data);
+  body.appendChild(headerRow);
+}
+
+function update(newStatus) {
+  const username = sessionStorage.getItem('username');
+  fetch('http://localhost:3000/reimbursements/username/'+username, {
+    body: JSON.stringify(reimbursements),
+    headers: {
+      'content-type': 'application/json'
+    },
+    credentials: 'include',
+    mode: 'cors'
+  })
+    .then(resp => {
+      resp.json();
+      location.reload(true);
+    })
+    .then(err => {
+      console.log(err);
+    })
+}
+
+function focusIn(username, timeSubmitted) {
+  fetch('http://localhost:3000/reimbursements/username/'+username+'/timestamp/'+String(timeSubmitted), {
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'GET',
+    credentials: 'include',
+    mode: 'cors'
+  })
+    // .then(resp => console.log(resp.json()))
+    .then(resp => {
+      // clear table
+      const body = document.getElementById('status-table-body');
+      body.innerHTML = '';
+
+      return resp.json();
+      // populate the table for each movie
+    })
+    .then(data => {
+      addIndividualReimbursement(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+function addIndividualReimbursement(reimbursements) {
+  const body = document.getElementById('status-table-body');
+  const top = document.getElementById('topopage');
+  // Approve or deny buttons
+  let approve = document.createElement('button');
+  approve.setAttribute('class','btn approve');
+  approve.setAttribute('onclick','update("approved")');
+  let deny = document.createElement('button');
+  deny.setAttribute('class','btn deny');
+  deny.setAttribute('onclick','update("deny")');
+  top.appendChild(approve);
+  top.appendChild(deny); 
+
+  const headerRow = document.createElement('tr'); //create new header
+  headerRow.setAttribute("class","header");
   let data = document.createElement('td'); // create <td>
   data.innerText = 'Entry:'; // assign value to the td
-  
+
   headerRow.appendChild(data); // append the td to the row
   data = document.createElement('td'); 
   data.innerText = reimbursements.username;
@@ -51,85 +151,24 @@ function addReimbursement(reimbursements) {
   data.innerText = reimbursements.approver;
   headerRow.appendChild(data);
   body.appendChild(headerRow);
-}
-
-function NextItem() {
-  let title = document.getElementById('inputTitle4').value;
-  let amount = document.getElementById('inputAmount4').value;
-  let description = document.getElementById('inputDescription4').value;
-  const options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
-  let timeOfExpense = new Date(document.getElementById('inputTime4').value).toLocaleDateString('en-US', options);
-
-  newItem = 
-  `{
-    "title": "${title}",
-    "amount": "${amount}",
-    "description": "${description}",
-    "timeOfExpense": "${timeOfExpense}"
-  }`
-
-  // if (localStorage.getItem("riarr").contains(title)) {
-  //   document.getElementById('inputTitle4').setAttribute('placeholder','Title must be unique to this list');
-  //   return;
-  // }
-
-  if (localStorage.getItem("riarr") === '[') { items = newItem; }
-  else { items = localStorage.getItem("riarr") + ', ' + newItem; }
-  localStorage.setItem("riarr", items); // riarr = reimbursement item array
-}
-
-function CreateReimbursement() {
-  NextItem();
-  console.log('['+localStorage.getItem("riarr")+']');
-  const itemlist = JSON.parse('[' + localStorage.getItem("riarr") + ']');
-  // const itemlist = JSON.parse('['+localStorage.getItem("riarr")+']');
-  console.log(itemlist);
-  let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
-  let reimburse = {
-    username: 'currentUser',
-    timeSubmitted: new Date(Date.now()).toLocaleString('en-US', options),
-    /*JSON.parse(localStorage.getItem("riarr")*/
-    items: itemlist,
-    approver: 'pending',
-    status: 'pending',
-    receipts: []
+  //Add the items
+  for (let i=0; i<reimbursements.items.length; i++) {
+    let row = document.createElement('tr');
+    data = document.createElement('td');
+    data.innerText = `${i+1}:`;
+    row.appendChild(data);
+    data = document.createElement('td');
+    data.innerText = reimbursements.items[i].title;
+    row.appendChild(data);
+    data = document.createElement('td');
+    data.innerText = reimbursements.items[i].amount;
+    row.appendChild(data);
+    data = document.createElement('td');
+    data.innerText = new Date(reimbursements.items[i].timeOfExpense).toLocaleDateString('en-US', options);
+    row.appendChild(data);
+    data = document.createElement('td');
+    data.innerText = reimbursements.items[i].description;
+    row.appendChild(data);
+    body.appendChild(row); // append the row to the body
   }
-
-  fetch('http://localhost:3000/reimbursements/', {
-    body: JSON.stringify(reimburse),
-    headers: {
-      'content-type': 'application/json'
-    },
-    credentials: 'include',
-    method: 'POST',
-    mode: 'cors'
-  })
-    .then(resp => {
-      resp.json();
-      location.reload(true);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
-
-function deleteReim() {
-  let time = String(Date.parse(document.getElementById('timeSubmitted').innerText));
-  let user = document.getElementById('username').innerText;
-  console.log(`${time}\n${user}`);
-  fetch(`http://localhost:3000/reimbursements/delete/username/${user}/timestamp/${time}`, {
-    headers: {
-      'content-type': 'application/json'
-    },
-    credentials: 'include',
-    method: 'DELETE',
-    mode: 'cors'
-  })
-    .then(resp => {
-      resp.json();
-      location.reload(true);
-    })
-    .catch(err => {
-      console.log(err);
-    })
 }

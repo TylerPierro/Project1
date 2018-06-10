@@ -10,8 +10,8 @@ export const reimbursementRouter = express.Router();
     resp.json(reimbursements);
 });
 */
-reimbursementRouter.get('/username', (req: Request, resp: Response) =>    {
-    const username = req.session.username;
+reimbursementRouter.get('/username/:username', (req: Request, resp: Response) =>    {
+    const username = req.params.username;
     //const username = 'TyPiRo';
     console.log(`retrieving remimbursements for user: ${username}`);
     reimbursementService.findReimbursementsByUsername(username)
@@ -37,8 +37,23 @@ reimbursementRouter.get('/status/:status', (req: Request, resp: Response) =>    
         });
 });
 
+reimbursementRouter.get('/username/:username/timestamp/:timestamp', (req: Request, resp: Response) =>    {
+    const username = req.params.username;
+    const timeSubmitted = Number(req.params.timestamp);
+    console.log(`retrieving remimbursement for user: ${username} at time ${timeSubmitted}`);
+    reimbursementService.findIndividualReimbursements(username,timeSubmitted)
+        .then(data => {
+            // console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
+            resp.json(data.Item);
+        })
+        .catch(err => {
+            console.log(err);
+            resp.sendStatus(500);
+        });
+});
+
 function validReimbursement(r : Reimbursement) : boolean {
-    let isValid = true;
+    let isValid = true; 
     if (!(r.getStatus() === 'approved' || r.getStatus() === 'denied' || r.getStatus() === 'pending')) {
         return false;
     } //If the status isn't approved or denied, bad request

@@ -1,6 +1,22 @@
+function adminsOnly() {
+  const status = sessionStorage.getItem('role');
+  const navBody = document.getElementById('leftNav');
+  if (status === 'admin') {
+    let adminNav = document.createElement('li');
+    adminNav.innerHTML = 
+    `<li class="nav-item active">
+      <a class="nav-link" href="../byStatus/index.html">Admins Page
+        <span class="sr-only">(current)</span>
+      </a>
+    </li>`;
+    navBody.appendChild(adminNav);
+  }
+}
+
 function retreiveUserReims() {
-  const status = document.getElementById('staus-input').value;
-  fetch('http://localhost:3000/reimbursements/status/', {credentials: 'include'})
+  const username = sessionStorage.getItem('username');
+  // const status = document.getElementById('staus-input').value;
+  fetch('http://localhost:3000/reimbursements/username/'+username, {credentials: 'include'})
     .then(resp => resp.json())
     .then((reimbursements) => {
 

@@ -24,7 +24,7 @@
   <link href="../navbar.css" rel="stylesheet">
 </head>
 
-<body>
+<body onload="adminsOnly()">
   <!-- Modal -->
   <div class="modal fade" id="ReimbursementModal" tabindex="-1" role="dialog" aria-labelledby="ReimbursementModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -80,14 +80,11 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarsExample04">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto" id="leftNav">
         <li class="nav-item active">
           <a class="nav-link" href="../sign-in/index.html">Sign In
             <span class="sr-only">(current)</span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../submit/index.html">Add Reimbursement</a>
         </li>
         <!--<li class="nav-item">
           <a class="nav-link disabled" href="../register/index.html">New</a>

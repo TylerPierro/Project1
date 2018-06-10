@@ -15,16 +15,16 @@
 
   <script src="index.js"></script>
   <script text='text/javascript'>
-    let preload = retreiveUserReims()
-    preload
+    retreiveUserReims()
     localStorage.setItem("riarr",'[')
   </script>
   
   <!-- Custom styles for this template -->
   <link href="../navbar.css" rel="stylesheet">
+  <link href="./approver.css" rel="stylesheet">
 </head>
 
-<body>
+<body onload="adminsOnly()">
   <!--Navbar-->
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Employee Reimbursement System</a>
@@ -34,14 +34,11 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarsExample04">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto" id="leftNav">
         <li class="nav-item active">
           <a class="nav-link" href="../sign-in/index.html">Sign In
             <span class="sr-only">(current)</span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../submit/index.html">Add Reimbursement</a>
         </li>
         <!--<li class="nav-item">
           <a class="nav-link disabled" href="../register/index.html">New</a>
@@ -61,13 +58,13 @@
     </div>
   </nav>
 
-  <div class="btn-group-vertical" role="group" aria-label="Basic example" align="right">
+  <div class="btn-group-vertical" role="group" aria-label="Basic example" align="left" style="position: fixed">
     <button type="button" class="btn btn-secondary" onclick="retreiveUserReims('approved')">Approved</button>
     <button type="button" class="btn btn-secondary" onclick="retreiveUserReims('pending')">Pending</button>
     <button type="button" class="btn btn-secondary" onclick="retreiveUserReims('denied')">Denied</button>
   </div>
 
-  <div class="container">
+  <div class="container" id="topopage">
     <div class="row">
       <!--<div class="col-sm">
         <button class="btn btn-danger" onclick="retreiveUserReims()">Fetch</button>

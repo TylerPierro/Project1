@@ -1,0 +1,14 @@
+html,
+#approve #deny {
+    size: 1em
+}
+
+#approve {
+    background-color: greenyellow;
+    background-image: url(https://media.giphy.com/media/oBPOP48aQpIxq/giphy.gif);
+    background-repeat: no-repeat;
+}
+
+#deny {
+    background-color: crimson;
+}
