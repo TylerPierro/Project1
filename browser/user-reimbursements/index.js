@@ -48,7 +48,9 @@ function addReimbursement(reimbursements) {
   deleteButton.setAttribute("type", "button");
   deleteButton.innerText = 'X';
   data.appendChild(document.createElement("br"));
-  data.appendChild(deleteButton);
+  if (reimbursements.status === 'pending') {
+    data.appendChild(deleteButton);
+  }
   //-------------
 
   headerRow.appendChild(data); // append the td to the row
