@@ -5,10 +5,12 @@ html,
 
 #approve {
     background-color: greenyellow;
-    background-image: url(https://media.giphy.com/media/oBPOP48aQpIxq/giphy.gif);
+    background-image: url('/browser/assets/thumbsup.png');
     background-repeat: no-repeat;
 }
 
 #deny {
     background-color: crimson;
+    background-image: url('/browser/assets/thumbsdown.png');
+    background-repeat: no-repeat;
 }

@@ -126,8 +126,8 @@ function CreateReimbursement() {
   console.log(itemlist);
   let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
   let reimburse = {
-    username: 'currentUser',
-    timeSubmitted: new Date(Date.now()).toLocaleString('en-US', options),
+    username: sessionStorage.getItem('username'),
+    timeSubmitted: Date.now(),
     /*JSON.parse(localStorage.getItem("riarr")*/
     items: itemlist,
     approver: 'pending',

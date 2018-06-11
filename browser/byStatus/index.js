@@ -11,6 +11,7 @@ function adminsOnly() {
     </li>`;
     navBody.appendChild(adminNav);
   }
+  else (window.location.assign("../AccessDenied/index.html"));
 }
 
 function retreiveUserReims(status='pending') {
