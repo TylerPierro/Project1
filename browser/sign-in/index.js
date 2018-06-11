@@ -1,3 +1,7 @@
+function logout() {
+  sessionStorage.clear();
+}
+
 function login() {
   const username = document.getElementById('inputUsername').value;
   const password = document.getElementById('inputPassword').value;

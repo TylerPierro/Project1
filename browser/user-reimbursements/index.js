@@ -13,6 +13,13 @@ function adminsOnly() {
   }
 }
 
+function personalize() {
+  localStorage.setItem("riarr",'[')
+  let title = document.getElementById("title");
+  console.log(title);
+  title.innerText = `${sessionStorage.getItem('username')}'s Reimbursements`;
+}
+
 function retreiveUserReims() {
   const username = sessionStorage.getItem('username');
   // const status = document.getElementById('staus-input').value;
@@ -111,14 +118,14 @@ function NextItem() {
     "timeOfExpense": "${timeOfExpense}"
   }`
 
-  // if (localStorage.getItem("riarr").contains(title)) {
-  //   document.getElementById('inputTitle4').setAttribute('placeholder','Title must be unique to this list');
-  //   return;
-  // }
-
   if (localStorage.getItem("riarr") === '[') { items = newItem; }
   else { items = localStorage.getItem("riarr") + ', ' + newItem; }
   localStorage.setItem("riarr", items); // riarr = reimbursement item array
+
+  document.getElementById('inputTitle4').value = '';
+  document.getElementById('inputAmount4').value = '';
+  document.getElementById('inputDescription4').value = '';
+  document.getElementById('inputTime4').value = '';
 }
 
 function CreateReimbursement() {
@@ -152,6 +159,7 @@ function CreateReimbursement() {
     .catch(err => {
       console.log(err);
     });
+  localStorage.setItem("riarr",'[')
 }
 
 function deleteReim(timeOfSubmission) {

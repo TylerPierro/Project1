@@ -8,16 +8,15 @@
   <meta name="author" content="Tyler Pierro">
   <link rel="icon" href="../../../../favicon.ico">
 
-  <title>ERS User Home</title>
+  <title>ERS Home</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
     crossorigin="anonymous">
 
   <script src="index.js"></script>
   <script text='text/javascript'>
-    let preload = retreiveUserReims()
-    preload
-    localStorage.setItem("riarr",'[')
+    retreiveUserReims()
+    personalize()
   </script>
   
   <!-- Custom styles for this template -->
@@ -73,7 +72,7 @@
   </div>
 
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Employee Reimbursement System</a>
+      <a class="navbar-brand" href="#" id="title">Employee Reimbursement System</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
