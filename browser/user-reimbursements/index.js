@@ -42,7 +42,8 @@ function addReimbursement(reimbursements) {
   
   //Delete button
   let deleteButton = document.createElement("button");
-  deleteButton.setAttribute("onclick", "deleteReim()");
+  deleteButton.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
+  console.log(reimbursements.timeSubmitted);
   deleteButton.setAttribute("class", "btn btn-danger");
   deleteButton.setAttribute("type", "button");
   deleteButton.innerText = 'X';
@@ -153,8 +154,8 @@ function CreateReimbursement() {
     });
 }
 
-function deleteReim() {
-  let time = String(Date.parse(document.getElementById('timeSubmitted').innerText));
+function deleteReim(timeOfSubmission) {
+  let time = timeOfSubmission;
   let user = document.getElementById('username').innerText;
   console.log(`${time}\n${user}`);
   fetch(`http://localhost:3000/reimbursements/delete/username/${user}/timestamp/${time}`, {

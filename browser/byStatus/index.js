@@ -143,7 +143,7 @@ function addIndividualReimbursement(reimbursements) {
   approve.setAttribute('onclick',`update("approved")`);
   let deny = document.createElement('button');
   deny.setAttribute('class','btn deny');
-  deny.setAttribute('onclick','update("deny")');
+  deny.setAttribute('onclick','update("denied")');
   top.appendChild(approve);
   top.appendChild(deny); 
 
