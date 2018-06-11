@@ -95,14 +95,18 @@ reimbursementRouter.post('',(req: Request, resp: Response) =>   {
 reimbursementRouter.put('/username/:username', (req: Request, resp: Response) => {
     let userRequest : boolean = false;
     let adminRequest : boolean = false;
+    console.log('here');
+
     if (!req.body.username || !req.body.timeSubmitted || !req.body.items || !req.body.approver || !req.body.status || !req.body.receipts)   {
         resp.sendStatus(400); 
     }
     const r = new Reimbursement(req.params.username, req.body.timeSubmitted, req.body.items, req.body.approver, req.body.status, req.body.receipts);
     console.log(`Updating reimbursement: ${JSON.stringify(req.body)}
         in reimbursements`);
-    
-    if (!validReimbursement) { resp.sendStatus(400); }
+
+    if (!validReimbursement) { 
+        console.log('uh oh spaghettio')
+        resp.sendStatus(400); }
     else {
         reimbursementService.updateReimbursement(r)
             .then(data => {

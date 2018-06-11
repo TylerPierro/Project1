@@ -10,9 +10,10 @@ export class Reimbursement {
         // strings that contain urls to retrieve the receipts from s3 buckets – stretch goal
     ];
 
-    constructor(use: string, time: string, it: ReimbursementItem[], admin: string, stat: string, rec: string[])   {
+    constructor(use: string, time: any, it: ReimbursementItem[], admin: string, stat: string, rec: string[])   {
         this.username = use;
-        this.timeSubmitted = Date.parse(time);
+        if (typeof(time) === 'string') {this.timeSubmitted = Date.parse(time);}
+        else {this.timeSubmitted = time;}
         this.items = it;
         this.approver = admin;
         this.status = stat;

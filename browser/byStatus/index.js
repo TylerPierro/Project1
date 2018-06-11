@@ -40,9 +40,10 @@ function addReimbursement(reimbursements) {
 
   // Row buttons
   const headerRow = document.createElement('tr'); //create new header
-  headerRow.setAttribute('onclick',`focusIn("${reimbursements.username}", "${reimbursements.timeSubmitted}")`);
-  let data = document.createElement('td'); // create <td>
   
+  if (reimbursements.status === 'pending') {headerRow.setAttribute('onclick',`focusIn("${reimbursements.username}", "${reimbursements.timeSubmitted}")`);}
+  
+  let data = document.createElement('td'); // create <td>
   headerRow.appendChild(data); // append the td to the row
   data = document.createElement('td'); 
   data.innerText = reimbursements.username;
@@ -68,21 +69,37 @@ function addReimbursement(reimbursements) {
 }
 
 function update(newStatus) {
-  const username = sessionStorage.getItem('username');
-  fetch('http://localhost:3000/reimbursements/username/'+username, {
+  let reimbursements = localStorage.getItem('reimbursementItem');
+  reimbursements = JSON.parse(reimbursements);
+  const approver = sessionStorage.getItem('username');
+  reimbursements.status = newStatus;
+  reimbursements.approver = approver;
+  
+  console.log(approver);
+  console.log(reimbursements);
+  fetch('http://localhost:3000/reimbursements/username/'+reimbursements.username, {
     body: JSON.stringify(reimbursements),
     headers: {
       'content-type': 'application/json'
     },
     credentials: 'include',
-    mode: 'cors'
+    method: 'PUT'
   })
     .then(resp => {
-      resp.json();
+      console.log(resp.status)
+      if (resp.status === 401) {
+        throw 'Invalid Credentials';
+      }
+      if (resp.status === 200) {
+        return resp.json();
+      } 
+      throw 'Unable to update at this time, please try again later';
+    })
+    .then(data => {
       location.reload(true);
     })
     .then(err => {
-      console.log(err);
+      console.log(JSON.stringify(err, null, 2));
     })
 }
 
@@ -113,12 +130,16 @@ function focusIn(username, timeSubmitted) {
 }
 
 function addIndividualReimbursement(reimbursements) {
+  // let ri = '['
+  console.log(JSON.stringify(reimbursements));
+  localStorage.setItem('reimbursementItem',JSON.stringify(reimbursements));
+
   const body = document.getElementById('status-table-body');
   const top = document.getElementById('topopage');
   // Approve or deny buttons
   let approve = document.createElement('button');
   approve.setAttribute('class','btn approve');
-  approve.setAttribute('onclick','update("approved")');
+  approve.setAttribute('onclick',`update("approved")`);
   let deny = document.createElement('button');
   deny.setAttribute('class','btn deny');
   deny.setAttribute('onclick','update("deny")');
