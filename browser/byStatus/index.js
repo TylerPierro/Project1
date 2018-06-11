@@ -139,11 +139,17 @@ function addIndividualReimbursement(reimbursements) {
   const top = document.getElementById('topopage');
   // Approve or deny buttons
   let approve = document.createElement('button');
-  approve.setAttribute('class','btn approve');
+  approve.setAttribute('class','approve');
   approve.setAttribute('onclick',`update("approved")`);
+  let appimg = document.createElement('img');
+  appimg.setAttribute('src','/assets/thumbsup.png');
+  approve.appendChild(appimg);
   let deny = document.createElement('button');
-  deny.setAttribute('class','btn deny');
+  deny.setAttribute('class','deny');
   deny.setAttribute('onclick','update("denied")');
+  let denimg = document.createElement('img');
+  denimg.setAttribute('src','/assets/thumbsdown.png');
+  approve.appendChild(denimg);
   top.appendChild(approve);
   top.appendChild(deny); 
 

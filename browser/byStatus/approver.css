@@ -1,16 +1,28 @@
 html,
-#approve #deny {
-    size: 1em
-}
-
-#approve {
-    background-color: greenyellow;
+.approve {
+    background-color: white; 
+    border: none;
     background-image: url('/browser/assets/thumbsup.png');
     background-repeat: no-repeat;
 }
 
-#deny {
-    background-color: crimson;
+.deny {
+    background-color: white;
+    border: none;
     background-image: url('/browser/assets/thumbsdown.png');
     background-repeat: no-repeat;
+}
+
+button img {
+    width: 35%;
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+    cursor: pointer;
+}
+
+.btn-group {
+    /* margin: auto !important; */
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }

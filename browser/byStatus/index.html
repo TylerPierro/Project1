@@ -52,13 +52,13 @@
     </div>
   </nav>
 
-  <div class="btn-group-vertical" role="group" aria-label="Basic example" align="left" style="position: fixed">
+  <div class="btn-group" role="group" aria-label="Approval filter">
     <button type="button" class="btn btn-secondary" onclick="retreiveUserReims('approved')">Approved</button>
     <button type="button" class="btn btn-secondary" onclick="retreiveUserReims('pending')">Pending</button>
     <button type="button" class="btn btn-secondary" onclick="retreiveUserReims('denied')">Denied</button>
   </div>
 
-  <div class="container" id="topopage">
+  <div class="container" id="topopage" style="position: relative">
     <div class="row">
     </div>
     <div class="row">
@@ -73,25 +73,12 @@
               <th scope="col">Approver</th>
             </tr>
           </thead>
-          <tbody id="status-table-body">
-            <!--<tr>
-              <th>Entry:</th>
-              <td>Tyler Pierro</th>
-              <td>Approved</td>
-              <td>June 4, 2018</td>
-              <td>Holly Pierro</td>
-            </tr>
-            <tr>
-              <th>Item 1</th>
-              <td>{}</td>
-            </tr>-->
+          <tbody id="status-table-body" style="position: relative">
+            
           </tbody>
         </table>
       </div>
     </div>
-    <!--<div class="col-sm">
-        <a href="../add-movie/index.html"><button class="btn btn-primary">Add Reimbursement</button></a>
-    </div>-->
   </div>
 
 
