@@ -15,7 +15,7 @@ function login() {
     mode: 'cors'
   })
   .then(resp => {
-    console.log(resp.status)
+    // console.log(resp.status)
     if (resp.status === 401) {
       throw 'Invalid Credentials';
     }

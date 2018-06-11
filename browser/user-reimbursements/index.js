@@ -43,7 +43,7 @@ function addReimbursement(reimbursements) {
   //Delete button
   let deleteButton = document.createElement("button");
   deleteButton.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
-  console.log(reimbursements.timeSubmitted);
+  // console.log(reimbursements.timeSubmitted);
   deleteButton.setAttribute("class", "btn btn-danger");
   deleteButton.setAttribute("type", "button");
   deleteButton.innerText = 'X';
@@ -123,15 +123,13 @@ function NextItem() {
 
 function CreateReimbursement() {
   NextItem();
-  console.log('['+localStorage.getItem("riarr")+']');
+  // console.log('['+localStorage.getItem("riarr")+']');
   const itemlist = JSON.parse('[' + localStorage.getItem("riarr") + ']');
-  // const itemlist = JSON.parse('['+localStorage.getItem("riarr")+']');
-  console.log(itemlist);
+  // console.log(itemlist);
   let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
   let reimburse = {
     username: sessionStorage.getItem('username'),
     timeSubmitted: Date.now(),
-    /*JSON.parse(localStorage.getItem("riarr")*/
     items: itemlist,
     approver: 'pending',
     status: 'pending',
@@ -159,7 +157,7 @@ function CreateReimbursement() {
 function deleteReim(timeOfSubmission) {
   let time = timeOfSubmission;
   let user = document.getElementById('username').innerText;
-  console.log(`${time}\n${user}`);
+  // console.log(`${time}\n${user}`);
   fetch(`http://localhost:3000/reimbursements/delete/username/${user}/timestamp/${time}`, {
     headers: {
       'content-type': 'application/json'

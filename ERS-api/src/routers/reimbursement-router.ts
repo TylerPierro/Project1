@@ -95,7 +95,6 @@ reimbursementRouter.post('',(req: Request, resp: Response) =>   {
 reimbursementRouter.put('/username/:username', (req: Request, resp: Response) => {
     let userRequest : boolean = false;
     let adminRequest : boolean = false;
-    console.log('here');
 
     if (!req.body.username || !req.body.timeSubmitted || !req.body.items || !req.body.approver || !req.body.status || !req.body.receipts)   {
         resp.sendStatus(400); 
@@ -105,7 +104,6 @@ reimbursementRouter.put('/username/:username', (req: Request, resp: Response) =>
         in reimbursements`);
 
     if (!validReimbursement) { 
-        console.log('uh oh spaghettio')
         resp.sendStatus(400); }
     else {
         reimbursementService.updateReimbursement(r)

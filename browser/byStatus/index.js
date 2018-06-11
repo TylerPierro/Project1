@@ -76,8 +76,8 @@ function update(newStatus) {
   reimbursements.status = newStatus;
   reimbursements.approver = approver;
   
-  console.log(approver);
-  console.log(reimbursements);
+  // console.log(approver);
+  // console.log(reimbursements);
   fetch('http://localhost:3000/reimbursements/username/'+reimbursements.username, {
     body: JSON.stringify(reimbursements),
     headers: {
@@ -87,7 +87,7 @@ function update(newStatus) {
     method: 'PUT'
   })
     .then(resp => {
-      console.log(resp.status)
+      // console.log(resp.status)
       if (resp.status === 401) {
         throw 'Invalid Credentials';
       }
@@ -113,7 +113,6 @@ function focusIn(username, timeSubmitted) {
     credentials: 'include',
     mode: 'cors'
   })
-    // .then(resp => console.log(resp.json()))
     .then(resp => {
       // clear table
       const body = document.getElementById('status-table-body');
@@ -132,7 +131,7 @@ function focusIn(username, timeSubmitted) {
 
 function addIndividualReimbursement(reimbursements) {
   // let ri = '['
-  console.log(JSON.stringify(reimbursements));
+  // console.log(JSON.stringify(reimbursements));
   localStorage.setItem('reimbursementItem',JSON.stringify(reimbursements));
 
   const body = document.getElementById('status-table-body');
