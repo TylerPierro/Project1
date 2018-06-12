@@ -1,0 +1,9 @@
+.carousel {
+    max-width: 80%;
+    max-height: 22em;
+    height: 22em;
+    margin: auto;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+}

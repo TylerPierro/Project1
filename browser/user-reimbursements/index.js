@@ -9,15 +9,15 @@ function adminsOnly() {
         <span class="sr-only">(current)</span>
       </a>
     </li>`;
-    navBody.appendChild(adminNav);
+    navBody.appendChild(adminNav);    
   }
-}
 
-function personalize() {
   localStorage.setItem("riarr",'[')
-  let title = document.getElementById("title");
-  console.log(title);
-  title.innerText = `${sessionStorage.getItem('username')}'s Reimbursements`;
+  const username = sessionStorage.getItem('username');
+  // console.log(username);
+  // console.log(document.getElementById('title'));
+  document.getElementById('title').innerHTML = username+"'s Reimbursements";
+  if (sessionStorage.getItem('role') == null) { window.location.assign("../AccessDenied/index.html"); }
 }
 
 function retreiveUserReims() {
