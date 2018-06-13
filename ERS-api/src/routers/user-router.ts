@@ -87,37 +87,21 @@ userRouter.post('',(req, resp) =>   {
 userRouter.post('/login', (req, resp, next) => {
     const user = req.body && req.body;
     // should probably send a call to the db to get the actual user object to determine role
-    if (req.body.username === 'admin' && req.body.password === 'admin') {
-      req.session.role = 'admin'; 
-      req.session.username = 'admin';
-      resp.json({
-        username: 'admin',
-        role: 'admin'
-      });
-    } else if (req.body.username === 'blake' && req.body.password === 'pass') {
-      req.session.role = 'employee';
-      req.session.username = 'blake';
-      resp.json({
-        username: 'blake',
-        role: 'employee'
-      });
-    } else {
-        const passwordHash = require('password-hash');
-        userService.findUserByUsername(`${req.body.username}`)
-            .then(data => {
-                console.log(data.Item);
-                if(req.body.username === data.Item.username && passwordHash.verify(req.body.password, data.Item.password))    {
-                    // req.session.role = data.Item.role;
-                    // req.session.username = data.Item.username;
-                    resp.json(data.Item);
-                    resp.sendStatus(200);
-                } else { resp.sendStatus(401); }
-            })
-            .catch(err => {
-                console.log(err);
-                resp.sendStatus(401);
-            })
-    }
+    const passwordHash = require('password-hash');
+    userService.findUserByUsername(`${req.body.username}`)
+        .then(data => {
+            console.log(data.Item);
+            if(req.body.username === data.Item.username && passwordHash.verify(req.body.password, data.Item.password))    {
+                // req.session.role = data.Item.role;
+                // req.session.username = data.Item.username;
+                resp.json(data.Item);
+                resp.sendStatus(200);
+            } else { resp.sendStatus(401); }
+        })
+        .catch(err => {
+            console.log(err);
+            resp.sendStatus(401);
+        })
   });
 
 //userRouter.put('',(req: Request, resp: Response) =>   {

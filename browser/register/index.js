@@ -1,7 +1,3 @@
-function authenticate() {
-  if (sessionStorage.getItem('role') == null) { window.location.assign("../AccessDenied/index.html"); }
-}
-
 function CreateUser() {
     // Find out what the role is for the new user
     const radios = document.getElementsByName('roleRadios');

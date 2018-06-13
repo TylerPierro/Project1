@@ -45,18 +45,23 @@ function addReimbursement(reimbursements) {
   const headerRow = document.createElement('tr'); //create new header
   headerRow.setAttribute("class","header");
   let data = document.createElement('td'); // create <td>
-  data.innerText = 'Entry:'; // assign value to the td
+  data.innerText = '(X) Entry:'; // assign value to the td
   
   //Delete button
-  let deleteButton = document.createElement("button");
-  deleteButton.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
+  // let deleteButton = document.createElement("button");
+  // deleteButton.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
   // console.log(reimbursements.timeSubmitted);
-  deleteButton.setAttribute("class", "btn btn-danger");
-  deleteButton.setAttribute("type", "button");
-  deleteButton.innerText = 'X';
-  data.appendChild(document.createElement("br"));
+  // deleteButton.setAttribute("class", "btn btn-danger");
+  // deleteButton.setAttribute("type", "button");
+  // deleteButton.innerText = 'X';
+  // data.appendChild(document.createElement("br"));
   if (reimbursements.status === 'pending') {
-    data.appendChild(deleteButton);
+    // data.appendChild(deleteButton);
+    data.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
+    data.setAttribute("type","button");
+    data.setAttribute("id", "deleteBtn");
+    data.setAttribute("cursor", "pointer");
+    data.setAttribute("style", "background-color: #d3510e")
   }
   //-------------
 
