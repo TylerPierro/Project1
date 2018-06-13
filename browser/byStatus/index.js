@@ -75,7 +75,7 @@ function update(newStatus) {
   const approver = sessionStorage.getItem('username');
   reimbursements.status = newStatus;
   reimbursements.approver = approver;
-  
+
   // console.log(approver);
   // console.log(reimbursements);
   fetch('http://localhost:3000/reimbursements/username/'+reimbursements.username, {
@@ -92,6 +92,7 @@ function update(newStatus) {
         throw 'Invalid Credentials';
       }
       if (resp.status === 200) {
+        if (approver = reimbursements.username) { throw "Admin's can't approve their own reimbursements"; }
         return resp.json();
       } 
       throw 'Unable to update at this time, please try again later';
