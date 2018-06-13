@@ -27,9 +27,8 @@
 
 <body class="text-center" onload="logout()">
   <!--Login form-->
-  <div class="form-signin">
+  <!--<div class="form-signin">
     <form class="form-signin" onsubmit="event.preventDefault(); login();">
-      <!-- <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <label for="inputUsername" class="sr-only">Username</label>
       <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
@@ -45,10 +44,34 @@
       <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
     </form>
     <h4>Not yet registered? Create a new account</h4>
-    <!-- Button trigger modal -->
-    <a class="nav-link" href="../register/index.html"><button type="button" class="btn btn-primary">
+    <!-- Button trigger registration -->
+    <!--<a class="nav-link" href="../register/index.html"><button type="button" class="btn btn-primary">
       Register
     </button></a>
+  </div>-->
+
+  <div class="container">
+    <form class="form-app" onsubmit="event.preventDefault(); login();">
+      <ul class="nav">
+        <li class="nav-item active"><a href="#">Sign in</a></li>
+        <li class="nav-item"><a href="../register/index.html">Sign Up</a></li>
+      </ul>
+  
+      <label for="login-user" class="form-label">Username</label>
+      <input id="inputUsername" class="form-input-text" type="text" />
+  
+      <label for="login-pass" class="form-label">Password</label>
+      <input id="inputPassword" class="form-input-text" type="password" />
+  
+      <div id="error-message"></div>
+      <label for="login-checkbox" class="form-checkbox-label">
+        <input id="login-checkbox" class="form-input-checkbox" type="checkbox"> Keep me logged in
+      </label>
+  
+      <button class="login-button" type="submit()">Sign in</button>
+    </form>
+    
+    <a href="#" class="link">Forgot Password?</a>
   </div>
 
   <script src="index.js"></script>
