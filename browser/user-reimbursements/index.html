@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Gather all the reimbursements for a given individual">
+  <meta name="author" content="Tyler Pierro">
+  <link rel="icon" href="../../../../favicon.ico">
+
+  <title>ERS Home</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="../style.css">
+
+  <script src="index.js"></script>
+  <script text='text/javascript'>
+    retreiveUserReims()
+  </script>
+  
+  <!-- Custom styles for this template -->
+  <link href="../navbar.css" rel="stylesheet">
+  <link href="user.css" rel="stylesheet">
+</head>
+
+<body onload="adminsOnly();">
+  <!-- Modal -->
+  <div class="modal fade" id="ReimbursementModal" tabindex="-1" role="dialog" aria-labelledby="ReimbursementModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ReimbursementModalTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="form" onsubmit="event.preventDefault(); CreateReimbursement()">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputTitle">Reason for Expense</label>
+                <input type="text" class="form-control" id="inputTitle4" placeholder="Airfare">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputAmount">Amount</label>
+                <input type="number" min="0" class="form-control" id="inputAmount4" placeholder="172.36">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="inputTime">Time of Expense</label>
+                <input type="datetime-local" class="form-control" id="inputTime4">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="inputDescription4">Description</label>
+                <textarea rows = "4" class="form-control" id="inputDescription4">
+                  Describe your expenses here
+                </textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="NextItem()">Add Another Item</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" form="form" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="#" id="title"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExample04">
+      <ul class="navbar-nav mr-auto" id="leftNav">
+        <li class="nav-item active">
+          <a class="nav-link" href="../sign-in/index.html">Sign Out
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="../user-reimbursements/index.html">Your items
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+    </div>
+    <div class="row">
+      <div class="col">
+        <table class="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ReimbursementModal">
+                  Submit<br/> New
+                </button>
+              </th>
+              <th scope="col">Employee</th>
+              <th scope="col">Status</th>
+              <th scope="col">Time Submitted</th>
+              <th scope="col">Approver</th>
+            </tr>
+          </thead>
+          <tbody id="user-table-body">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

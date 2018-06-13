@@ -1,6 +1,6 @@
 export class Reimbursement {
     private username : string;  // partition key
-    private timeSubmitted : string;  // sort key, number
+    private timeSubmitted : number;  // sort key, number
     private items : ReimbursementItem [
         // array of reimbursement items
     ];
@@ -10,9 +10,10 @@ export class Reimbursement {
         // strings that contain urls to retrieve the receipts from s3 buckets – stretch goal
     ];
 
-    constructor(use: string, time: string, it: ReimbursementItem[], admin: string, stat: string, rec: string[])   {
+    constructor(use: string, time: any, it: ReimbursementItem[], admin: string, stat: string, rec: string[])   {
         this.username = use;
-        this.timeSubmitted = new Date(Date.parse(time)).toLocaleString('en-US');
+        if (typeof(time) === 'string') {this.timeSubmitted = Date.parse(time);}
+        else {this.timeSubmitted = time;}
         this.items = it;
         this.approver = admin;
         this.status = stat;
@@ -21,8 +22,8 @@ export class Reimbursement {
     
     getUsername() : string {return this.username;}
     setUsername(user : string) : void {this.username = user;}
-    getTimeSubmitted() : string {return this.timeSubmitted;}
-    setTimeSubmitted(time : string) : void {this.timeSubmitted = time;}
+    getTimeSubmitted() : number {return this.timeSubmitted;}
+    setTimeSubmitted(time : string) : void {this.timeSubmitted = Date.parse(time);}
     getItems() : ReimbursementItem[] {return this.items;}
     setItems(tickets : ReimbursementItem[]) : void {this.items = tickets;}
     getApprover() : string {return this.approver;}
@@ -36,13 +37,13 @@ export class ReimbursementItem {
     private title : string; //must be unique to this list
     private amount : number; //50
     private description : string; //description of what the reimbursement is for
-    private timeOfExpense : string //timestamp // number
+    private timeOfExpense : number //timestamp // number
 
     constructor(legend : string, val : number, desc : string, expTime : string) {
         this.title = legend;
         this.amount = val;
         this.description = desc;
-        this.timeOfExpense = new Date(Date.parse(expTime)).toLocaleString('en-US');
+        this.timeOfExpense = Date.parse(expTime);
     }
     
     getTitle() : string {return this.title;}
@@ -51,6 +52,6 @@ export class ReimbursementItem {
     setAmount(val : number) : void {this.amount = val;}
     getDescription() : string {return this.description;}
     setDescription(desc : string) : void {this.description = desc;}
-    getTimeOfExpense() : string {return this.timeOfExpense;}
-    setTimeOfExpense(expTime : string) : void {this.timeOfExpense = expTime;}
+    getTimeOfExpense() : number {return this.timeOfExpense;}
+    setTimeOfExpense(expTime : string) : void {this.timeOfExpense = Date.parse(expTime);}
 }
