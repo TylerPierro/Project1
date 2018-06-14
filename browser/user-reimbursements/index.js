@@ -28,7 +28,7 @@ function retreiveUserReims() {
     .then((reimbursements) => {
 
       // clear table
-      const body = document.getElementById('user-table-body');
+      const body = document.getElementById('cardstock');
       body.innerHTML = '';
 
       // populate the table for each movie
@@ -39,72 +39,116 @@ function retreiveUserReims() {
     });
 }
 
+function removeElement(elementId) {
+  // Removes an element from the document
+  var element = document.getElementById(elementId);
+  element.parentNode.removeChild(element);
+}
+
 function addReimbursement(reimbursements) {
-  const body = document.getElementById('user-table-body');
+  const body = document.getElementById('cardstock');
+  let username = document.createElement('h4');
+  username.innerText = reimbursements.username;
+  username.setAttribute('id','username');
+  username.setAttribute('display','none');
 
-  const headerRow = document.createElement('tr'); //create new header
-  headerRow.setAttribute("class","header");
-  let data = document.createElement('td'); // create <td>
-  data.innerText = '(X) Entry:'; // assign value to the td
-  
-  //Delete button
-  // let deleteButton = document.createElement("button");
-  // deleteButton.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
-  // console.log(reimbursements.timeSubmitted);
-  // deleteButton.setAttribute("class", "btn btn-danger");
-  // deleteButton.setAttribute("type", "button");
-  // deleteButton.innerText = 'X';
-  // data.appendChild(document.createElement("br"));
-  if (reimbursements.status === 'pending') {
-    // data.appendChild(deleteButton);
-    data.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
-    data.setAttribute("type","button");
-    data.setAttribute("id", "deleteBtn");
-    data.setAttribute("cursor", "pointer");
-    data.setAttribute("style", "background-color: #d3510e")
-  }
-  //-------------
+  try {
+    let card = document.createElement('div'); //card div
+    card.setAttribute("onclick","toggle()");
+    card.appendChild(username);
+    card.setAttribute("class","card text-center");
+      let title = document.createElement('div'); // title div
+      title.setAttribute("class","title");
+        let titleI = document.createElement('i');
+        titleI.setAttribute("class","fab fa-telegram-plane");
+        title.appendChild(titleI);
+        let titleH2 = document.createElement('h4');
+        let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
+        titleH2.innerText = new Date(reimbursements.timeSubmitted).toLocaleDateString('en-US', options);
+        title.appendChild(titleH2);
+        card.appendChild(title);
+      let value = document.createElement('div');
+      value.setAttribute("class","price");
+        card.appendChild(value);
+      let status = document.createElement('h3');
+        status.innerText = reimbursements.status;
+        card.appendChild(status);
+      let approver = document.createElement('h4');
+        approver.innerText = reimbursements.approver;
+        card.appendChild(approver);  
+      
+      const table = document.createElement('table');
+      let tbody = document.createElement('tbody');
+      table.appendChild(tbody);
+      let tableTitle = document.createElement('h2');
+      let titleCell = document.createElement('tr');
+      titleCell.setAttribute("colspan","2");
+      tableTitle.innerText = 'Reimbursements:';
+      titleCell.appendChild(tableTitle);
+      tbody.appendChild(titleCell);
 
-  headerRow.appendChild(data); // append the td to the row
-  data = document.createElement('td'); 
-  data.innerText = reimbursements.username;
-  data.setAttribute("id","username");
-  headerRow.appendChild(data); 
-  data = document.createElement('td');
-  data.innerText = reimbursements.status; 
-  headerRow.appendChild(data);
+      let amount = Number(0);
 
-  //  Time submitted
-  data = document.createElement('td');
-  let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
-  data.innerText = new Date(reimbursements.timeSubmitted).toLocaleDateString('en-US', options);
-  data.setAttribute("id","timeSubmitted");
-  headerRow.appendChild(data);
-  //  ---------------
+      //Add the items
+      for (let i=0; i<reimbursements.items.length; i++) {
+        amount = Number(amount) + Number(reimbursements.items[i].amount);
+        let row = document.createElement('tr');
 
-  data = document.createElement('td');
-  data.innerText = reimbursements.approver;
-  headerRow.appendChild(data);
-  body.appendChild(headerRow);
-  //Add the items
-  for (let i=0; i<reimbursements.items.length; i++) {
-    let row = document.createElement('tr');
-    data = document.createElement('td');
-    data.innerText = `${i+1}:`;
-    row.appendChild(data);
-    data = document.createElement('td');
-    data.innerText = reimbursements.items[i].title;
-    row.appendChild(data);
-    data = document.createElement('td');
-    data.innerText = reimbursements.items[i].amount;
-    row.appendChild(data);
-    data = document.createElement('td');
-    data.innerText = new Date(reimbursements.items[i].timeOfExpense).toLocaleDateString('en-US', options);
-    row.appendChild(data);
-    data = document.createElement('td');
-    data.innerText = reimbursements.items[i].description;
-    row.appendChild(data);
-    body.appendChild(row); // append the row to the body
+        let data = document.createElement('td');
+        options = { month: "short", day: "numeric", year: "numeric"};
+        data.innerText = `${reimbursements.items[i].title}, $${reimbursements.items[i].amount}, ${new Date(reimbursements.items[i].timeOfExpense).toLocaleString('en-US',options)}`;
+
+        row.appendChild(data);
+        tbody.appendChild(row); // append the row to the body
+
+        row = document.createElement('tr');
+        data = document.createElement('td');
+
+        // "Hidden" descriptions
+        row.setAttribute("class","toggle")
+        row.setAttribute("style","display: none");
+        data.innerText = reimbursements.items[i].description;
+        row.appendChild(data);
+        tbody.appendChild(row);
+      }
+
+      let valueAmount = document.createElement('h1');
+        valueAmount.setAttribute("id","valueAmount");
+      // let value$ = document.createElement('sup');
+      // value$.innerHTML = '$';
+      // valueAmount.appendChild(value$);
+      valueAmount.innerHTML = `$${amount}`;
+      value.appendChild(valueAmount);
+
+      let adjuster = document.getElementById('valueAmount'); 
+
+    card.appendChild(table);
+    
+    //Delete button
+    const deleteButton = document.createElement('button');
+    deleteButton.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
+    deleteButton.setAttribute("type","button");
+    deleteButton.setAttribute("id", "deleteBtn");
+    deleteButton.setAttribute("cursor", "pointer");
+    deleteButton.setAttribute("class","btn btn-danger");
+    deleteButton.innerText = "Delete";
+    if (reimbursements.status === 'pending') {
+      // deleteButton.setAttribute("style", "background-color: #d3510e");
+      card.appendChild(deleteButton);
+      $("div", this).on('click', function() {
+        $('tr:nth-child(2)').toggleClass('active');
+      });
+    }
+
+    body.appendChild(card);
+  } finally {
+    if (body.innerHTML === '') {
+      removeElement('cardstock');
+      let card = document.createElement('div');
+      card.setAttribute("class", "card text-center");
+        let emptyMessage = document.createElement('h1');
+        emptyMessage.innerHTML = `No reimbursements to show, for ${reimbursements.username}`;
+    }
   }
 }
 
@@ -186,4 +230,16 @@ function deleteReim(timeOfSubmission) {
     .catch(err => {
       console.log(err);
     })
+}
+
+function toggle() {
+  let x = document.getElementsByClassName('toggle');
+  for (let i=0; i<x.length; i++) {
+    if (x[i].style.display === "none") { 
+      x[i].style.display = "block";
+      x[i].setAttribute("style", "align-content: flex-start");
+    } else {
+      x[i].style.display = "none";
+    }
+  }
 }
