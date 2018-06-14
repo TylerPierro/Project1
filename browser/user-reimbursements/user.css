@@ -3,9 +3,18 @@ html,
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-  /*.card {
-    
-  }*/
+}
+
+.scrolling-wrapper .card {
+  flex: 0 0 auto;
+  align-content: center;  
+  margin-right: 12px;
+  margin-left: 12px;
+  margin-top: 22px;
+  margin-bottom: 40px;
+  display: inline-block;
+  background-color: goldenrod;
+  word-wrap: break-word;
 }
 
 /*.scrolling-wrapper-flexbox {
@@ -26,8 +35,6 @@ html,
   display: inline-block;*/
   padding: 10px;
   max-width: 300px;
-  flex: 0 0 auto;
-  margin-right: 3px;
   height: auto;
   border-radius: 40px;
   margin: 0 auto;
@@ -39,4 +46,35 @@ html,
 
 .card:hover{
   transform: scale(1.1);
+}
+
+table {
+  align-content: flex-start;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }

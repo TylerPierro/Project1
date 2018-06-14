@@ -56,19 +56,20 @@ function addReimbursement(reimbursements) {
         let titleI = document.createElement('i');
         titleI.setAttribute("class","fab fa-telegram-plane");
         title.appendChild(titleI);
-        let titleH2 = document.createElement('h2');
+        let titleH2 = document.createElement('h4');
         let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
         titleH2.innerText = new Date(reimbursements.timeSubmitted).toLocaleDateString('en-US', options);
         title.appendChild(titleH2);
         card.appendChild(title);
       let value = document.createElement('div');
       value.setAttribute("class","price");
-        let amount = 0;
-        let valueAmount = document.createElement('h4');
-        let value$ = document.createElement('sup');
-        value$.innerText = '$';
-        valueAmount.appendChild(value$);
-        valueAmount.innerText = amount;
+        let amount = Number(0);
+        let valueAmount = document.createElement('h1');
+          valueAmount.setAttribute("id","valueAmount");
+        // let value$ = document.createElement('sup');
+        // value$.innerHTML = '$';
+        // valueAmount.appendChild(value$);
+        valueAmount.innerHTML = `$${amount}`;
         value.appendChild(valueAmount);
         card.appendChild(value);
       let status = document.createElement('h3');
@@ -77,7 +78,50 @@ function addReimbursement(reimbursements) {
       let approver = document.createElement('h4');
         approver.innerText = reimbursements.approver;
         card.appendChild(approver);  
+      
+      const table = document.createElement('table');
+      let tbody = document.createElement('tbody');
+      table.appendChild(tbody);
+      let tableTitle = document.createElement('h2');
+      let titleCell = document.createElement('tr');
+      titleCell.setAttribute("colspan","2");
+      tableTitle.innerText = 'Reimbursements:';
+      titleCell.appendChild(tableTitle);
+      tbody.appendChild(titleCell);
 
+      //Add the items
+      for (let i=0; i<reimbursements.items.length; i++) {
+        amount += Number(reimbursements.items[i].amount);
+        const row = document.createElement('tr');
+
+        //Tool tip descriptions
+        /*row.setAttribute("class","tooltip")
+        let tipspan = document.createElement('span');
+        tipspan.setAttribute("class","tooltiptext");
+        tipspan.innerHTML = `Description: ${reimbursements.description}`;
+        row.appendChild(tipspan);*/
+
+        let data = document.createElement('td');
+        options = { month: "short", day: "numeric", year: "numeric"};
+        data.innerText = `${reimbursements.items[i].title}, $${reimbursements.items[i].amount}, ${new Date(reimbursements.items[i].timeOfExpense).toLocaleString('en-US',options)}`;
+        row.appendChild(data);
+        /*data = document.createElement('td');
+        data.innerText = reimbursements.items[i].title;
+        row.appendChild(data);
+        data = document.createElement('td');
+        data.innerText = reimbursements.items[i].amount;
+        row.appendChild(data);
+        data = document.createElement('td');
+        data.innerText = new Date(reimbursements.items[i].timeOfExpense).toLocaleDateString('en-US', options);*/
+        row.appendChild(data);
+        tbody.appendChild(row); // append the row to the body
+      }
+
+      console.log(amount);
+      let adjuster = document.getElementById('valueAmount'); 
+      console.log(adjuster);
+      //adjuster.innerText = `$${amount}`;
+    card.appendChild(table);
     body.appendChild(card);
   } finally {
     if (body.innerHTML === '') {
@@ -97,27 +141,6 @@ function addReimbursement(reimbursements) {
     card.setAttribute("id", "deleteBtn");
     card.setAttribute("cursor", "pointer");
     card.setAttribute("style", "background-color: #d3510e")
-  }
-
-  //Add the items
-  for (let i=0; i<reimbursements.items.length; i++) {
-    let row = document.createElement('tr');
-    data = document.createElement('td');
-    data.innerText = `${i+1}:`;
-    row.appendChild(data);
-    data = document.createElement('td');
-    data.innerText = reimbursements.items[i].title;
-    row.appendChild(data);
-    data = document.createElement('td');
-    data.innerText = reimbursements.items[i].amount;
-    row.appendChild(data);
-    data = document.createElement('td');
-    data.innerText = new Date(reimbursements.items[i].timeOfExpense).toLocaleDateString('en-US', options);
-    row.appendChild(data);
-    data = document.createElement('td');
-    data.innerText = reimbursements.items[i].description;
-    row.appendChild(data);
-    body.appendChild(row); // append the row to the body
   }*/
 }
 
