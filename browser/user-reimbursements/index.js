@@ -54,6 +54,7 @@ function addReimbursement(reimbursements) {
 
   try {
     let card = document.createElement('div'); //card div
+    card.setAttribute("onclick","toggle()");
     card.appendChild(username);
     card.setAttribute("class","card text-center");
       let title = document.createElement('div'); // title div
@@ -104,8 +105,8 @@ function addReimbursement(reimbursements) {
         data = document.createElement('td');
 
         // "Hidden" descriptions
-        row.setAttribute("class","inactiveRow")
-        row.setAttribute("rowspan","3");
+        row.setAttribute("class","toggle")
+        row.setAttribute("style","display: none");
         data.innerText = reimbursements.items[i].description;
         row.appendChild(data);
         tbody.appendChild(row);
@@ -231,15 +232,14 @@ function deleteReim(timeOfSubmission) {
     })
 }
 
-function toggle(className) {
-  let descriptionRows;
-  if (className === 'activeRow') { 
-    descriptionRows = document.getElementsByClassName('activeRow'); 
-    descriptionRows.removeClass();
-    descriptionRows.setAttribute("class","inactiveRow");
-  } else { 
-    descriptionRows = document.getElementsByClassName('inactiveRow'); 
-    descriptionRows.removeClass();
-    descriptionRows.setAttribute("class","activeRow");
+function toggle() {
+  let x = document.getElementsByClassName('toggle');
+  for (let i=0; i<x.length; i++) {
+    if (x[i].style.display === "none") { 
+      x[i].style.display = "block";
+      x[i].setAttribute("style", "align-content: flex-start");
+    } else {
+      x[i].style.display = "none";
+    }
   }
 }
