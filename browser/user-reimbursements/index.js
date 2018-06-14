@@ -119,10 +119,7 @@ function addReimbursement(reimbursements) {
       valueAmount.innerHTML = `$${amount}`;
       value.appendChild(valueAmount);
 
-      console.log(amount);
       let adjuster = document.getElementById('valueAmount'); 
-      console.log(adjuster);
-      //adjuster.innerText = `$${amount}`;
     card.appendChild(table);
     body.appendChild(card);
   } finally {
