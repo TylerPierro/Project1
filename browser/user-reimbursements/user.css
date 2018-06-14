@@ -103,7 +103,7 @@ button {
   text-align: center;
   width: 130px;
   border-radius: 40px;
-  background: #fff;
+  background: white;
   border: 2px solid #1ecd97;
   color: #1ecd97;
   letter-spacing: 1px;
@@ -123,7 +123,7 @@ button:active {
 /* button:after {
   content: "SUBMIT";
 } */
-.onclic {
+.onclick {
   width: 40px;
   border-color: #bbb;
   border-width: 3px;
@@ -131,10 +131,10 @@ button:active {
   border-left-color: #1ecd97;
   animation: rotating 2s 0.25s linear infinite;
 }
-.onclic:after {
+.onclick:after {
   content: "";
 }
-.onclic:hover {
+.onclick:hover {
   color: #1ecd97;
   background: white;
 }
