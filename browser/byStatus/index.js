@@ -92,7 +92,7 @@ function update(newStatus) {
         throw 'Invalid Credentials';
       }
       if (resp.status === 200) {
-        if (approver = reimbursements.username) { throw "Admin's can't approve their own reimbursements"; }
+        if (approver === reimbursements.username) { throw "Admin's can't approve their own reimbursements"; }
         return resp.json();
       } 
       throw 'Unable to update at this time, please try again later';
