@@ -63,14 +63,6 @@ function addReimbursement(reimbursements) {
         card.appendChild(title);
       let value = document.createElement('div');
       value.setAttribute("class","price");
-        let amount = Number(0);
-        let valueAmount = document.createElement('h1');
-          valueAmount.setAttribute("id","valueAmount");
-        // let value$ = document.createElement('sup');
-        // value$.innerHTML = '$';
-        // valueAmount.appendChild(value$);
-        valueAmount.innerHTML = `$${amount}`;
-        value.appendChild(valueAmount);
         card.appendChild(value);
       let status = document.createElement('h3');
         status.innerText = reimbursements.status;
@@ -89,9 +81,11 @@ function addReimbursement(reimbursements) {
       titleCell.appendChild(tableTitle);
       tbody.appendChild(titleCell);
 
+      let amount = Number(0);
+
       //Add the items
       for (let i=0; i<reimbursements.items.length; i++) {
-        amount += Number(reimbursements.items[i].amount);
+        amount = Number(amount) + Number(reimbursements.items[i].amount);
         const row = document.createElement('tr');
 
         //Tool tip descriptions
@@ -116,6 +110,14 @@ function addReimbursement(reimbursements) {
         row.appendChild(data);
         tbody.appendChild(row); // append the row to the body
       }
+
+      let valueAmount = document.createElement('h1');
+        valueAmount.setAttribute("id","valueAmount");
+      // let value$ = document.createElement('sup');
+      // value$.innerHTML = '$';
+      // valueAmount.appendChild(value$);
+      valueAmount.innerHTML = `$${amount}`;
+      value.appendChild(valueAmount);
 
       console.log(amount);
       let adjuster = document.getElementById('valueAmount'); 
