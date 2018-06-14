@@ -28,7 +28,7 @@ function retreiveUserReims() {
     .then((reimbursements) => {
 
       // clear table
-      const body = document.getElementById('user-table-body');
+      const body = document.getElementById('cardstock');
       body.innerHTML = '';
 
       // populate the table for each movie
@@ -39,53 +39,66 @@ function retreiveUserReims() {
     });
 }
 
-function addReimbursement(reimbursements) {
-  const body = document.getElementById('user-table-body');
+function removeElement(elementId) {
+  // Removes an element from the document
+  var element = document.getElementById(elementId);
+  element.parentNode.removeChild(element);
+}
 
-  const headerRow = document.createElement('tr'); //create new header
-  headerRow.setAttribute("class","header");
-  let data = document.createElement('td'); // create <td>
-  data.innerText = '(X) Entry:'; // assign value to the td
-  
+function addReimbursement(reimbursements) {
+  const body = document.getElementById('cardstock');
+
+  try {
+    let card = document.createElement('div'); //card div
+    card.setAttribute("class","card text-center");
+      let title = document.createElement('div'); // title div
+      title.setAttribute("class","title");
+        let titleI = document.createElement('i');
+        titleI.setAttribute("class","fab fa-telegram-plane");
+        title.appendChild(titleI);
+        let titleH2 = document.createElement('h2');
+        let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
+        titleH2.innerText = new Date(reimbursements.timeSubmitted).toLocaleDateString('en-US', options);
+        title.appendChild(titleH2);
+        card.appendChild(title);
+      let value = document.createElement('div');
+      value.setAttribute("class","price");
+        let amount = 0;
+        let valueAmount = document.createElement('h4');
+        let value$ = document.createElement('sup');
+        value$.innerText = '$';
+        valueAmount.appendChild(value$);
+        valueAmount.innerText = amount;
+        value.appendChild(valueAmount);
+        card.appendChild(value);
+      let status = document.createElement('h3');
+        status.innerText = reimbursements.status;
+        card.appendChild(status);
+      let approver = document.createElement('h4');
+        approver.innerText = reimbursements.approver;
+        card.appendChild(approver);  
+
+    body.appendChild(card);
+  } finally {
+    if (body.innerHTML === '') {
+      removeElement('cardstock');
+      let card = document.createElement('div');
+      card.setAttribute("class", "card text-center");
+        let emptyMessage = document.createElement('h1');
+        emptyMessage.innerHTML = `No reimbursements to show, for ${reimbursements.username}`;
+    }
+  }
+  /*
   //Delete button
-  // let deleteButton = document.createElement("button");
-  // deleteButton.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
-  // console.log(reimbursements.timeSubmitted);
-  // deleteButton.setAttribute("class", "btn btn-danger");
-  // deleteButton.setAttribute("type", "button");
-  // deleteButton.innerText = 'X';
-  // data.appendChild(document.createElement("br"));
   if (reimbursements.status === 'pending') {
     // data.appendChild(deleteButton);
-    data.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
-    data.setAttribute("type","button");
-    data.setAttribute("id", "deleteBtn");
-    data.setAttribute("cursor", "pointer");
-    data.setAttribute("style", "background-color: #d3510e")
+    card.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
+    card.setAttribute("type","button");
+    card.setAttribute("id", "deleteBtn");
+    card.setAttribute("cursor", "pointer");
+    card.setAttribute("style", "background-color: #d3510e")
   }
-  //-------------
 
-  headerRow.appendChild(data); // append the td to the row
-  data = document.createElement('td'); 
-  data.innerText = reimbursements.username;
-  data.setAttribute("id","username");
-  headerRow.appendChild(data); 
-  data = document.createElement('td');
-  data.innerText = reimbursements.status; 
-  headerRow.appendChild(data);
-
-  //  Time submitted
-  data = document.createElement('td');
-  let options = { month: "long", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit"};
-  data.innerText = new Date(reimbursements.timeSubmitted).toLocaleDateString('en-US', options);
-  data.setAttribute("id","timeSubmitted");
-  headerRow.appendChild(data);
-  //  ---------------
-
-  data = document.createElement('td');
-  data.innerText = reimbursements.approver;
-  headerRow.appendChild(data);
-  body.appendChild(headerRow);
   //Add the items
   for (let i=0; i<reimbursements.items.length; i++) {
     let row = document.createElement('tr');
@@ -105,7 +118,7 @@ function addReimbursement(reimbursements) {
     data.innerText = reimbursements.items[i].description;
     row.appendChild(data);
     body.appendChild(row); // append the row to the body
-  }
+  }*/
 }
 
 function NextItem() {
