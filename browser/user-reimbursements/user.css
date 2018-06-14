@@ -17,22 +17,7 @@ html,
   word-wrap: break-word;
 }
 
-/*.scrolling-wrapper-flexbox {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  
-  .card {
-    flex: 0 0 auto;
-    margin-right: 3px;
-  }
-}*/
-
 .card {
-  /*border: 1px solid white;
-  background: black;
-  position: relative;
-  display: inline-block;*/
   padding: 10px;
   max-width: 300px;
   height: auto;
@@ -50,36 +35,11 @@ html,
 
 table {
   align-content: flex-start;
+  border-collapse: collapse;
 }
-
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
+#username {
+  display: none;
 }
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  top: 100%;
-  left: 50%;
-  margin-left: -60px;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
-
 
 
 
@@ -120,9 +80,6 @@ button:hover {
 button:active {
   letter-spacing: 2px;
 }
-/* button:after {
-  content: "SUBMIT";
-} */
 .onclick {
   width: 40px;
   border-color: #bbb;

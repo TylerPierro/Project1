@@ -47,9 +47,14 @@ function removeElement(elementId) {
 
 function addReimbursement(reimbursements) {
   const body = document.getElementById('cardstock');
+  let username = document.createElement('h4');
+  username.innerText = reimbursements.username;
+  username.setAttribute('id','username');
+  username.setAttribute('display','none');
 
   try {
     let card = document.createElement('div'); //card div
+    card.appendChild(username);
     card.setAttribute("class","card text-center");
       let title = document.createElement('div'); // title div
       title.setAttribute("class","title");
@@ -86,29 +91,24 @@ function addReimbursement(reimbursements) {
       //Add the items
       for (let i=0; i<reimbursements.items.length; i++) {
         amount = Number(amount) + Number(reimbursements.items[i].amount);
-        const row = document.createElement('tr');
-
-        //Tool tip descriptions
-        /*row.setAttribute("class","tooltip")
-        let tipspan = document.createElement('span');
-        tipspan.setAttribute("class","tooltiptext");
-        tipspan.innerHTML = `Description: ${reimbursements.description}`;
-        row.appendChild(tipspan);*/
+        let row = document.createElement('tr');
 
         let data = document.createElement('td');
         options = { month: "short", day: "numeric", year: "numeric"};
         data.innerText = `${reimbursements.items[i].title}, $${reimbursements.items[i].amount}, ${new Date(reimbursements.items[i].timeOfExpense).toLocaleString('en-US',options)}`;
-        row.appendChild(data);
-        /*data = document.createElement('td');
-        data.innerText = reimbursements.items[i].title;
-        row.appendChild(data);
-        data = document.createElement('td');
-        data.innerText = reimbursements.items[i].amount;
-        row.appendChild(data);
-        data = document.createElement('td');
-        data.innerText = new Date(reimbursements.items[i].timeOfExpense).toLocaleDateString('en-US', options);*/
+
         row.appendChild(data);
         tbody.appendChild(row); // append the row to the body
+
+        row = document.createElement('tr');
+        data = document.createElement('td');
+
+        // "Hidden" descriptions
+        row.setAttribute("class","inactiveRow")
+        row.setAttribute("rowspan","3");
+        data.innerText = reimbursements.items[i].description;
+        row.appendChild(data);
+        tbody.appendChild(row);
       }
 
       let valueAmount = document.createElement('h1');
@@ -120,7 +120,25 @@ function addReimbursement(reimbursements) {
       value.appendChild(valueAmount);
 
       let adjuster = document.getElementById('valueAmount'); 
+
     card.appendChild(table);
+    
+    //Delete button
+    const deleteButton = document.createElement('button');
+    deleteButton.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
+    deleteButton.setAttribute("type","button");
+    deleteButton.setAttribute("id", "deleteBtn");
+    deleteButton.setAttribute("cursor", "pointer");
+    deleteButton.setAttribute("class","btn btn-danger");
+    deleteButton.innerText = "Delete";
+    if (reimbursements.status === 'pending') {
+      // deleteButton.setAttribute("style", "background-color: #d3510e");
+      card.appendChild(deleteButton);
+      $("div", this).on('click', function() {
+        $('tr:nth-child(2)').toggleClass('active');
+      });
+    }
+
     body.appendChild(card);
   } finally {
     if (body.innerHTML === '') {
@@ -131,16 +149,6 @@ function addReimbursement(reimbursements) {
         emptyMessage.innerHTML = `No reimbursements to show, for ${reimbursements.username}`;
     }
   }
-  /*
-  //Delete button
-  if (reimbursements.status === 'pending') {
-    // data.appendChild(deleteButton);
-    card.setAttribute("onclick", `deleteReim(${reimbursements.timeSubmitted})`);
-    card.setAttribute("type","button");
-    card.setAttribute("id", "deleteBtn");
-    card.setAttribute("cursor", "pointer");
-    card.setAttribute("style", "background-color: #d3510e")
-  }*/
 }
 
 function NextItem() {
@@ -223,20 +231,15 @@ function deleteReim(timeOfSubmission) {
     })
 }
 
-$(function() {
-  $( "#button" ).click(function() {
-    $( "#button" ).addClass( "onclic", 250, validate);
-  });
-
-  function validate() {
-    setTimeout(function() {
-      $( "#button" ).removeClass( "onclic" );
-      $( "#button" ).addClass( "validate", 450, callback );
-    }, 2250 );
+function toggle(className) {
+  let descriptionRows;
+  if (className === 'activeRow') { 
+    descriptionRows = document.getElementsByClassName('activeRow'); 
+    descriptionRows.removeClass();
+    descriptionRows.setAttribute("class","inactiveRow");
+  } else { 
+    descriptionRows = document.getElementsByClassName('inactiveRow'); 
+    descriptionRows.removeClass();
+    descriptionRows.setAttribute("class","activeRow");
   }
-    function callback() {
-      setTimeout(function() {
-        $( "#button" ).removeClass( "validate" );
-      }, 1250 );
-    }
-  });
+}
