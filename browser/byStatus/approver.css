@@ -1,13 +1,13 @@
 html,
 .approve {
-    background-color: white; 
+    background-color: transparent; 
     border: none;
     background-image: url('/browser/assets/thumbsup.png');
     background-repeat: no-repeat;
 }
 
 .deny {
-    background-color: white;
+    background-color: transparent;
     border: none;
     background-image: url('/browser/assets/thumbsdown.png');
     background-repeat: no-repeat;
